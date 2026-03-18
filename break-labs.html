@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Break Labs</title>
+  <style>
+    :root {
+      --bg: #05070b;
+      --panel: rgba(14, 19, 28, 0.72);
+      --panel-border: rgba(93, 126, 255, 0.18);
+      --text: #f5f8ff;
+      --muted: #9ba8c7;
+      --blue: #4dc8ff;
+      --blue-2: #1f7bff;
+      --silver: #d7deea;
+      --gold: #d8b25f;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(41, 138, 255, 0.14), transparent 32%),
+        radial-gradient(circle at 80% 10%, rgba(0, 204, 255, 0.12), transparent 28%),
+        linear-gradient(180deg, #07101c 0%, #04070d 28%, #000 100%);
+      overflow-x: hidden;
+    }
+
+    .gridlines,
+    .glow-orb,
+    .glow-orb-2 {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .gridlines {
+      opacity: 0.18;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(255,255,255,0.45), transparent 85%);
+    }
+
+    .glow-orb {
+      background: radial-gradient(circle at 22% 15%, rgba(0, 187, 255, 0.20), transparent 18%);
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+
+    .glow-orb-2 {
+      background: radial-gradient(circle at 78% 20%, rgba(77, 112, 255, 0.16), transparent 20%);
+      animation: drift2 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0,0,0); }
+      to { transform: translate3d(20px,20px,0); }
+    }
+
+    @keyframes drift2 {
+      from { transform: translate3d(0,0,0); }
+      to { transform: translate3d(-18px,24px,0); }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 0 72px;
+    }
+
+    .hero-card {
+      width: 100%;
+      text-align: center;
+      padding: 28px 22px 36px;
+      border: 1px solid var(--panel-border);
+      background: linear-gradient(180deg, rgba(11,16,25,0.84), rgba(8,10,16,0.66));
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.05) 18%, transparent 36%);
+      transform: translateX(-100%);
+      animation: sheen 7s linear infinite;
+    }
+
+    @keyframes sheen {
+      to { transform: translateX(180%); }
+    }
+
+    .main-logo {
+      width: min(460px, 72vw);
+      display: block;
+      margin: 6px auto 10px;
+      filter: drop-shadow(0 0 16px rgba(61, 197, 255, 0.45)) drop-shadow(0 0 42px rgba(26, 104, 255, 0.24));
+      animation: pulse 3.5s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.01); }
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(98, 174, 255, 0.24);
+      background: rgba(7, 14, 26, 0.58);
+      color: #b9d3ff;
+      letter-spacing: 0.18em;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 84px);
+      line-height: 0.98;
+      letter-spacing: 0.04em;
+      margin: 18px 0 10px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tagline {
+      font-size: clamp(16px, 2vw, 24px);
+      letter-spacing: 0.28em;
+      color: var(--silver);
+      opacity: 0.9;
+      text-transform: uppercase;
+      margin: 0 auto 18px;
+      max-width: 900px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtext {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 190px;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: #03111d;
+      background: linear-gradient(90deg, #7ae1ff, #40b8ff 55%, #2d7dff);
+      box-shadow: 0 14px 36px rgba(44, 144, 255, 0.32);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(160, 188, 255, 0.18);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      padding: 18px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(149, 179, 255, 0.12);
+      border-radius: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(22px, 3vw, 30px);
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    section {
+      padding: 34px 0 22px;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .section-head p {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .experience {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .experience-card {
+      padding: 24px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(14, 18, 28, 0.90), rgba(10, 13, 20, 0.72));
+      border: 1px solid rgba(111, 142, 255, 0.14);
+      box-shadow: var(--shadow);
+      text-align: left;
+    }
+
+    .experience-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .experience-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .tier-card {
+      background: linear-gradient(180deg, rgba(12, 16, 24, 0.92), rgba(8, 10, 16, 0.75));
+      border: 1px solid rgba(106, 136, 238, 0.14);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(91, 193, 255, 0.34);
+      box-shadow: 0 28px 70px rgba(0,0,0,.48);
+    }
+
+    .tier-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+
+    .tier-body {
+      padding: 18px 18px 20px;
+      text-align: left;
+    }
+
+    .tier-body h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tier-body p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .cta-panel {
+      margin: 26px 0 60px;
+      padding: 28px 24px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top, rgba(61, 156, 255, 0.20), transparent 34%),
+        linear-gradient(180deg, rgba(14, 19, 31, 0.92), rgba(8, 10, 15, 0.82));
+      border: 1px solid rgba(104, 140, 255, 0.16);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-panel h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      text-transform: uppercase;
+    }
+
+    .cta-panel p {
+      margin: 0 auto 22px;
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 0 0 28px;
+      text-align: center;
+      color: #7c88a4;
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .experience,
+      .tier-grid,
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { min-height: auto; padding-top: 18px; }
+      .hero-card { padding: 20px 16px 24px; border-radius: 22px; }
+      .tagline { letter-spacing: 0.16em; }
+      .experience,
+      .tier-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      .btn { width: 100%; }
+      .cta-row { align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <div class="gridlines"></div>
+  <div class="glow-orb"></div>
+  <div class="glow-orb-2"></div>
+
+  <main class="wrap">
+    <section class="hero" id="top">
+      <div class="hero-card">
+        <span class="eyebrow">Premium Break Brand</span>
+        <img src="logo.png" alt="Break Labs logo" class="main-logo" />
+        <h1>Break Labs</h1>
+        <p class="tagline">Where Hits Are Engineered</p>
+        <p class="subtext">
+          Premium live breaks, elite presentation, and a brand built for collectors who want more than just a rip.
+          Break Labs is designed to feel bigger, cleaner, and more unforgettable every time the stream goes live.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.instagram.com/break_labs/" target="_blank" rel="noopener noreferrer">Follow @break_labs</a>
+          <a class="btn btn-secondary" href="#tiers">View Tiers</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>Elite</strong><span>Presentation</span></div>
+          <div class="stat"><strong>Live</strong><span>Break Energy</span></div>
+          <div class="stat"><strong>Premium</strong><span>Collector Focus</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>The Experience</h2>
+        <p>
+          Built to stand out on stream and across social. The goal is simple: make every break feel premium, clean,
+          and dialed in from the first second to the last reveal.
+        </p>
+      </div>
+      <div class="experience">
+        <article class="experience-card">
+          <h3>High-End Brand Feel</h3>
+          <p>Luxury dark visuals, polished presentation, and a premium identity that separates Break Labs from ordinary breakers.</p>
+        </article>
+        <article class="experience-card">
+          <h3>Collector-First Energy</h3>
+          <p>Designed for people chasing real heat, memorable moments, and a strong community around major pulls and major nights.</p>
+        </article>
+        <article class="experience-card">
+          <h3>Scalable Platform</h3>
+          <p>Set up to grow into live breaks, repacks, signature tiers, exclusive drops, and a full ecosystem around the brand.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tiers">
+      <div class="section-head">
+        <h2>Break Labs Tiers</h2>
+        <p>
+          Your tier system is one of the strongest parts of the brand. This page uses your actual logos to give each line
+          its own identity while keeping the whole site cohesive.
+        </p>
+      </div>
+      <div class="tier-grid">
+        <article class="tier-card">
+          <img src="specimen.png" alt="Specimen tier logo" />
+          <div class="tier-body">
+            <h3>Specimen</h3>
+            <p>Verified pull series energy with a clean, foundational premium feel for the first layer of the brand.</p>
+          </div>
+        </article>
+        <article class="tier-card">
+          <img src="compound.png" alt="Compound tier logo" />
+          <div class="tier-body">
+            <h3>Compound</h3>
+            <p>Enhanced pulls with a brighter electric identity, built to feel upgraded and more advanced.</p>
+          </div>
+        </article>
+        <article class="tier-card">
+          <img src="catalyst.png" alt="Catalyst tier logo" />
+          <div class="tier-body">
+            <h3>Catalyst</h3>
+            <p>Reaction-tier branding with a bold purple glow, ideal for momentum, energy, and standout moments.</p>
+          </div>
+        </article>
+        <article class="tier-card">
+          <img src="fusion.png" alt="Fusion tier logo" />
+          <div class="tier-body">
+            <h3>Fusion</h3>
+            <p>High-energy hits with a red-core visual identity that feels explosive and built for premium chase nights.</p>
+          </div>
+        </article>
+        <article class="tier-card">
+          <img src="blackmatter.png" alt="Black Matter tier logo" />
+          <div class="tier-body">
+            <h3>Black Matter</h3>
+            <p>The ultra-chase layer of the brand. Dark, rare, premium, and positioned as the flagship top-end experience.</p>
+          </div>
+        </article>
+        <article class="tier-card">
+          <img src="logo.png" alt="Break Labs main logo" />
+          <div class="tier-body">
+            <h3>Break Labs</h3>
+            <p>The core brand that ties the full system together across live breaks, product drops, content, and future expansion.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="cta-panel">
+        <h2>Join the Next Drop</h2>
+        <p>
+          New breaks, brand updates, and future releases can all flow through your Instagram right now. This page is ready
+          to act as your clean front door until you add Whatnot links, spot listings, or a full live store.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.instagram.com/break_labs/" target="_blank" rel="noopener noreferrer">Go to Instagram</a>
+          <a class="btn btn-secondary" href="#top">Back to Top</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Break Labs. Premium breaks. Elite presentation.
+    </footer>
+  </main>
+</body>
+</html>
