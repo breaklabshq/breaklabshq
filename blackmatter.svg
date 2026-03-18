@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="bg-bm" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#020202"/>
+    </radialGradient>
+    <linearGradient id="t-bm" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e0e0e0"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#c0c0c0"/>
+    </linearGradient>
+    <filter id="glow-bm">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg-bm)"/>
+  <rect x="155" y="115" width="90" height="90" rx="8" fill="none" stroke="url(#t-bm)" stroke-width="2" filter="url(#glow-bm)" opacity="0.4" transform="rotate(45, 200, 160)"/>
+  <circle cx="200" cy="160" r="20" fill="none" stroke="url(#t-bm)" stroke-width="1.5" filter="url(#glow-bm)" opacity="0.3"/>
+  <text x="200" y="275" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="30" fill="url(#t-bm)" filter="url(#glow-bm)" letter-spacing="3">BLACK MATTER</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="14" fill="#888" letter-spacing="8">BREAK LABS</text>
+</svg>

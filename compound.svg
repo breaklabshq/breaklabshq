@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="bg-c" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1a3a5c"/>
+      <stop offset="100%" stop-color="#050a12"/>
+    </radialGradient>
+    <linearGradient id="t-c" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#40d4ff"/>
+      <stop offset="100%" stop-color="#1f7bff"/>
+    </linearGradient>
+    <filter id="glow-c">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg-c)"/>
+  <circle cx="200" cy="160" r="60" fill="none" stroke="url(#t-c)" stroke-width="3" filter="url(#glow-c)" opacity="0.5"/>
+  <circle cx="200" cy="160" r="35" fill="none" stroke="url(#t-c)" stroke-width="2" filter="url(#glow-c)" opacity="0.3"/>
+  <text x="200" y="280" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="36" fill="url(#t-c)" filter="url(#glow-c)" letter-spacing="6">COMPOUND</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="14" fill="#6a8eee" letter-spacing="8">BREAK LABS</text>
+</svg>
