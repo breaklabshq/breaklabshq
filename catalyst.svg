@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="bg-cat" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#2a1a4c"/>
+      <stop offset="100%" stop-color="#08050f"/>
+    </radialGradient>
+    <linearGradient id="t-cat" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b060ff"/>
+      <stop offset="100%" stop-color="#7030dd"/>
+    </linearGradient>
+    <filter id="glow-cat">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg-cat)"/>
+  <polygon points="200,100 240,180 320,180 255,225 275,310 200,260 125,310 145,225 80,180 160,180" fill="none" stroke="url(#t-cat)" stroke-width="2.5" filter="url(#glow-cat)" opacity="0.5"/>
+  <text x="200" y="280" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="36" fill="url(#t-cat)" filter="url(#glow-cat)" letter-spacing="5">CATALYST</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="14" fill="#8a5cc0" letter-spacing="8">BREAK LABS</text>
+</svg>
